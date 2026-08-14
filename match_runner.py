@@ -36,7 +36,7 @@ def run_match(
             
             info = engine.analyse(board, chess.engine.Limit(depth=depth))
             move = info["pv"][0]
-            print(f"[{board.ply() + 1}] d{depth} | {info['score'].white()}")
+            print(f"[{board.ply() + 1}] {board.san(move)} | {info['score'].white()}")
             
             node = node.add_variation(move)
             board.push(move)
