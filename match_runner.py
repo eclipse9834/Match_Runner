@@ -19,13 +19,14 @@ def run_match(
     try:
         ew.configure({"Hash": white_hash, "Threads": white_threads})
         eb.configure({"Hash": black_hash, "Threads": black_threads})
-        
+        white_player = ew.id.get("name", "Stockfish")
+        black_player = eb.id.get("name", "Stockfish")
         board = chess.Board(start_fen)
         game = chess.pgn.Game()
         game.headers.update({
             "Event": "Engine_Match", 
-            "White": "stockfish 18", 
-            "Black": "stockfish 18", 
+            "White": white_player, 
+            "Black": black_player, 
             "FEN": start_fen
         })
         
