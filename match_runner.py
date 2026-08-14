@@ -12,7 +12,6 @@ def run_match(
     black_hash, 
     black_threads
 ):
-    os.system("pkill stockfish")
     ew = chess.engine.SimpleEngine.popen_uci(white_engine)
     eb = chess.engine.SimpleEngine.popen_uci(black_engine)
     
