@@ -1,7 +1,3 @@
-!curl -sS -L -O https://github.com/official-stockfish/Stockfish/releases/download/sf_18/stockfish-ubuntu-x86-64-avx2.tar && tar -xf stockfish-ubuntu-x86-64-avx2.tar
-!curl -sS -L -O https://github.com/eclipse9834/Match_Runner/releases/download/v1.0.0/match_runner.py
-!uv pip install -q python-chess
-
 import match_runner
 
 # ----------------------
