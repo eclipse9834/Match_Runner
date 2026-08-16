@@ -38,7 +38,7 @@ def run_match(
             depth = white_depth if board.turn else black_depth
             time_limit = white_time if board.turn else black_time
             
-            info = engine.analyse(board, chess.engine.Limit(depth=depth, time=time_limit)))
+            info = engine.analyse(board, chess.engine.Limit(depth=depth, time=time_limit))
             move = info["pv"][0]
             print(f"[{board.ply() + 1}] {board.san(move)} | {info['score'].white()}")
             
