@@ -10,7 +10,8 @@ def run_match(
     black_engine, 
     black_depth, 
     black_hash, 
-    black_threads
+    black_threads,
+    max_moves
 ):
     ew = chess.engine.SimpleEngine.popen_uci(white_engine)
     eb = chess.engine.SimpleEngine.popen_uci(black_engine)
