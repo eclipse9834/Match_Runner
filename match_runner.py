@@ -1,46 +1,17 @@
-import os, chess, chess.engine, chess.pgn
+import chess as c, chess.engine as e, chess.pgn as p
 
 def run_match(start_fen, max_moves, resign_centipawns, pgn_name, white_engine, white_time, white_depth, white_hash, white_threads, black_engine, black_time, black_depth, black_hash, black_threads):
-    ew = chess.engine.SimpleEngine.popen_uci(white_engine)
-    eb = chess.engine.SimpleEngine.popen_uci(black_engine)
-    
-    try:
-        ew.configure({"Hash": white_hash, "Threads": white_threads})
-        eb.configure({"Hash": black_hash, "Threads": black_threads})
-        white_player = ew.id.get("name", "Stockfish")
-        black_player = eb.id.get("name", "Stockfish")
-        board = chess.Board(start_fen)
-        game = chess.pgn.Game()
-        game.headers.update({
-            "Event": "Engine_Match", 
-            "White": white_player, 
-            "Black": black_player, 
-            "FEN": start_fen
-        })
+    with e.SimpleEngine.popen_uci(white_engine)as W, e.SimpleEngine.popen_uci(black_engine)as B:
+        W.configure({"Hash":white_hash,"Threads":white_threads}); B.configure({"Hash":black_hash,"Threads":black_threads})
+        b,g = c.Board(start_fen),p.Game(); n,r = g,None
+        g.headers.update({"Event":"Engine_Match", "White":W.id.get("name","Stockfish"), "Black":B.id.get("name","Stockfish"), "FEN":start_fen})
         
-        node = game
-        while not board.is_game_over() and board.ply() < max_moves:
-            engine = ew if board.turn else eb
-            depth = white_depth if board.turn else black_depth
-            time_limit = white_time if board.turn else black_time
+        while not b.is_game_over() and b.ply() < max_moves:
+            t=b.turn; i=(B,W)[t].analyse(b,e.Limit(depth=(black_depth,white_depth)[t],time=(black_time,white_time)[t]))
+            m,s=i["pv"][0],i["score"].white(); v=s.mate()or s.score()or 0
+            if s.is_mate()or abs(v)>resign_centipawns: r="1-0"if v>0 else"0-1"; break
+            print(f"[{b.ply()+1}] {b.san(m)} | {s} | D: {i.get('depth')}"); n=n.add_variation(m); b.push(m)
             
-            info = engine.analyse(board, chess.engine.Limit(depth=depth, time=time_limit))
-            move = info["pv"][0]
-            score = info['score'].white()
-            if score.is_mate() or abs(score.score() or 0) > resign_centipawns: game.headers["Result"] = "1-0" if (score.mate() if score.is_mate() else score.score()) > 0 else "0-1"; break
-
-            print(f"[{board.ply() + 1}] {board.san(move)} | {info['score'].white()} | D: {info.get('depth')}")
-            
-            node = node.add_variation(move)
-            board.push(move)
-            
-        game.headers["Result"] = board.result()
-        with open(pgn_name, "w", encoding="utf-8") as f:
-            game.accept(chess.pgn.FileExporter(f))
-            
-        print("\nResultado:", board.result())
-        print("PGN:", pgn_name)
-        
-    finally:
-        ew.quit()
-        eb.quit()
+        g.headers["Result"] = r or b.result()
+        with open(pgn_name,"w",encoding="utf-8")as f: f.write(str(g))
+        print(f"\nResultado: {g.headers['Result']}\nPGN: {pgn_name}")
