@@ -40,8 +40,10 @@ def run_match(
             time_limit = white_time if board.turn else black_time
             
             info = engine.analyse(board, chess.engine.Limit(depth=depth, time=time_limit))
-            if abs(info['score'].white().score() or 0) > resign_centipawns: break
             move = info["pv"][0]
+            score = info['score'].white()
+            if score.is_mate() or abs(score.score() or 0) > resign_centipawns: game.headers["Result"] = "1-0" if (score.mate() if score.is_mate() else score.score()) > 0 else "0-1"; break
+
             print(f"[{board.ply() + 1}] {board.san(move)} | {info['score'].white()} | D: {info.get('depth')}")
             
             node = node.add_variation(move)
