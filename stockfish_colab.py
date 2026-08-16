@@ -6,13 +6,13 @@ MAX_MOVES = 200
 PGN_NAME = "match_2008.pgn"
 
 WHITE_ENGINE = "/content/stockfish/stockfish-ubuntu-x86-64-avx2"
-WHITE_TIME = 1000
+WHITE_TIME = 1.0
 WHITE_DEPTH = 18
 WHITE_HASH = 248
 WHITE_THREADS = 1
 
 BLACK_ENGINE = "/content/stockfish/stockfish-ubuntu-x86-64-avx2"
-BLACK_TIME = 1000
+BLACK_TIME = 1.0
 BLACK_DEPTH = 18
 BLACK_HASH = 248
 BLACK_THREADS = 1
