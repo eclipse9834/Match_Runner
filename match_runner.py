@@ -34,8 +34,9 @@ def run_match(
         while not board.is_game_over() and board.ply() < max_moves:
             engine = ew if board.turn else eb
             depth = white_depth if board.turn else black_depth
+            time_limit = white_time if board.turn else black_time
             
-            info = engine.analyse(board, chess.engine.Limit(depth=depth))
+            info = engine.analyse(board, chess.engine.Limit(depth=depth, time=time_limit)))
             move = info["pv"][0]
             print(f"[{board.ply() + 1}] {board.san(move)} | {info['score'].white()}")
             
