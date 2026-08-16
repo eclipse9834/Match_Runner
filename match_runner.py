@@ -31,7 +31,7 @@ def run_match(
         })
         
         node = game
-        while not board.is_game_over():
+        while not board.is_game_over() and board.ply() < max_moves:
             engine = ew if board.turn else eb
             depth = white_depth if board.turn else black_depth
             
