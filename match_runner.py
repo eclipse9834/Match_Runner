@@ -42,7 +42,7 @@ def run_match(
             info = engine.analyse(board, chess.engine.Limit(depth=depth, time=time_limit))
             if abs(info['score'].white().score() or 0) > resign_centipawns: break
             move = info["pv"][0]
-            print(f"[{board.ply() + 1}] {board.san(move)} | {info['score'].white()}")
+            print(f"[{board.ply() + 1}] {board.san(move)} | {info['score'].white()} | D: {info.get('depth')}")
             
             node = node.add_variation(move)
             board.push(move)
