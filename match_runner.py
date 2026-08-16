@@ -2,6 +2,7 @@ import os, chess, chess.engine, chess.pgn
 
 def run_match(
     start_fen, 
+    max_moves,
     pgn_name, 
     white_engine, 
     white_time,
@@ -12,8 +13,7 @@ def run_match(
     black_time,
     black_depth, 
     black_hash, 
-    black_threads,
-    max_moves
+    black_threads
 ):
     ew = chess.engine.SimpleEngine.popen_uci(white_engine)
     eb = chess.engine.SimpleEngine.popen_uci(black_engine)
