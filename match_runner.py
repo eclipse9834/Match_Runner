@@ -3,6 +3,7 @@ import os, chess, chess.engine, chess.pgn
 def run_match(
     start_fen, 
     max_moves,
+    resign_centipawns,
     pgn_name, 
     white_engine, 
     white_time,
@@ -39,6 +40,7 @@ def run_match(
             time_limit = white_time if board.turn else black_time
             
             info = engine.analyse(board, chess.engine.Limit(depth=depth, time=time_limit))
+            if abs(info['score'].white().score() or 0) > resign_centipawns: break
             move = info["pv"][0]
             print(f"[{board.ply() + 1}] {board.san(move)} | {info['score'].white()}")
             
