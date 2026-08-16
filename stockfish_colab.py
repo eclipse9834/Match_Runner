@@ -3,6 +3,7 @@ import match_runner
 # ----------------------
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 MAX_MOVES = 200
+RESIGN_CENTIPAWNS = 200
 PGN_NAME = "match_2008.pgn"
 
 WHITE_ENGINE = "/content/stockfish/stockfish-ubuntu-x86-64-avx2"
@@ -19,7 +20,7 @@ BLACK_THREADS = 1
 # ----------------------
 
 match_runner.run_match(
-    START_FEN, MAX_MOVES, PGN_NAME,
+    START_FEN, MAX_MOVES, RESIGN_CENTIPAWNS, PGN_NAME,
     WHITE_ENGINE, WHITE_TIME, WHITE_DEPTH, WHITE_HASH, WHITE_THREADS,
     BLACK_ENGINE, BLACK_TIME, BLACK_DEPTH, BLACK_HASH, BLACK_THREADS
 )
