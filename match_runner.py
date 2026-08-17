@@ -8,4 +8,4 @@ with e.SimpleEngine.popen_uci(we) as W,e.SimpleEngine.popen_uci(be) as B:
    if(s:=res["score"].white()).is_mate():r="1-0"if s.mate()>0 else"0-1";break
    v,m=s.score(mate_score=1e5)or 0,res["pv"][0]
    l.append(sm:=b.san(m));print(f"[{b.ply()+1}] {sm} | D: {res.get('depth')} | S: {s}");b.push(m)
-  print(f"\nResultado: {r if 'r' in locals() else b.result()}\nLances: {' '.join(f'{i//2+1}.{" ".join(l[i:i+2])}' for i in range(0,len(l),2))}")
+  print(f"\nResultado: {r if 'r' in locals() else b.result()}\nLances: {' '.join(f'{i//2+1}.{" ".join(l[i:i+2])}' for i in range(0,len(l),2))}\n")
