@@ -1,17 +1,11 @@
-import chess as c, chess.engine as e, chess.pgn as p
-
-def run_match(start_fen, max_moves, resign_centipawns, pgn_name, white_engine, white_time, white_depth, white_hash, white_threads, black_engine, black_time, black_depth, black_hash, black_threads):
-    with e.SimpleEngine.popen_uci(white_engine)as W, e.SimpleEngine.popen_uci(black_engine)as B:
-        W.configure({"Hash":white_hash,"Threads":white_threads}); B.configure({"Hash":black_hash,"Threads":black_threads})
-        b,g = c.Board(start_fen),p.Game(); n,r = g,None
-        g.headers.update({"Event":"Engine_Match", "White":W.id.get("name","Stockfish"), "Black":B.id.get("name","Stockfish"), "FEN":start_fen})
-        
-        while not b.is_game_over() and b.ply() < max_moves:
-            t=b.turn; i=(B,W)[t].analyse(b,e.Limit(depth=(black_depth,white_depth)[t],time=(black_time,white_time)[t]))
-            m,s=i["pv"][0],i["score"].white(); v=s.mate()or s.score()or 0
-            if s.is_mate()or abs(v)>resign_centipawns: r="1-0"if v>0 else"0-1"; break
-            print(f"[{b.ply()+1}] {b.san(m)} | {s} | D: {i.get('depth')}"); n=n.add_variation(m); b.push(m)
-            
-        g.headers["Result"] = r or b.result()
-        with open(pgn_name,"w",encoding="utf-8")as f: f.write(str(g))
-        print(f"\nResultado: {g.headers['Result']}\nPGN: {pgn_name}")
+import chess as c,chess.engine as e
+def run_match(f,we,wh,wt,wd,be,bh,bt,bd):
+ Wd,Bd,b,v,l=sorted(wd,reverse=True),sorted(bd,reverse=True),c.Board(f),0,[]
+with e.SimpleEngine.popen_uci(we) as W,e.SimpleEngine.popen_uci(be) as B:
+  W.configure({"Hash":wh, "Threads":wt});B.configure({"Hash":bh, "Threads":bt})
+  E,T=(B,W),(Bd,Wd)
+  while not b.is_game_over()and(res:=E[b.turn].analyse(b,e.Limit(depth=next((x for k,x in T[b.turn]if abs(v)>=k),None)))).get("pv"):
+   if(s:=res["score"].white()).is_mate():r="1-0"if s.mate()>0 else"0-1";break
+   v,m=s.score(mate_score=1e5)or 0,res["pv"][0]
+   l.append(sm:=b.san(m));print(f"[{b.ply()+1}] {sm} | D: {res.get('depth')} | S: {s}");b.push(m)
+  print(f"\nResultado: {r if 'r' in locals() else b.result()}\nLances: {' '.join(l)}")
