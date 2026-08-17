@@ -3,12 +3,12 @@ import match_runner
 # ----------------------
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
-WHITE_ENGINE = "/content/stockfish/stockfish-linux-x86-64-universal"
+WHITE_ENGINE = "/content/stockfish/stockfish-ubuntu-x86-64-avx2"
 WHITE_DEPTHS = [(200, 18), (70, 20), (0, 18)]
 WHITE_HASH = 64
 WHITE_THREADS = 1
 
-BLACK_ENGINE = "/content/stockfish/stockfish-linux-x86-64-universal"
+BLACK_ENGINE = "/content/stockfish/stockfish-ubuntu-x86-64-avx2"
 BLACK_DEPTHS = [(200, 18), (70, 20), (0, 18)]
 BLACK_HASH = 64
 BLACK_THREADS = 1
