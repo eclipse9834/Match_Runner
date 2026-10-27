@@ -13,5 +13,5 @@ def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None):
             print(f"D: {d} | {em}")
             if r and (wdl.losses if b.turn==c.WHITE else wdl.wins) >= r: g.headers["Result"] = "0-1" if b.turn==c.WHITE else "1-0"; break
             n = n.add_variation(m); b.push(m)
-        g.headers.update({"Event":"Match","White":W.id.get("name","W"),"Black":B.id.get("name","B"),"Result":g.headers.get("Result", b.result()) if "Result" not in g.headers else g.headers["Result"],"FEN":f,"SetUp":"1"})
+        g.headers.update({"Event":"Match","White":W.id.get("name","W"),"Black":B.id.get("name","B"),"Result":g.headers.get("Result", b.result()),"FEN":f,"SetUp":"1"})
         open(pn,"w").write(str(g))
