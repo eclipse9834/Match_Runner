@@ -7,11 +7,11 @@ def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None):
     with e.SimpleEngine.popen_uci(we) as W, e.SimpleEngine.popen_uci(be) as B:
         W.configure({"Hash":wh,"Threads":wt}); B.configure({"Hash":bh,"Threads":bt})
         E,T,w = (W, B), (Wd, Bd), 0
-        while not b.is_game_over() and (res:=E[b.turn].analyse(b,e.Limit(depth=(d:=next((x for k,x in T[b.turn] if abs(w)>=k),10))))).get("pv"):
+        while not b.is_game_over(claim_draw=True) and (res:=E[b.turn].analyse(b,e.Limit(depth=(d:=next((x for k,x in T[b.turn] if abs(w)>=k),10))))).get("pv"):
             wdl,m = res["score"].white().wdl(), res["pv"][0]; w = wdl.draws
             em = "🤝" if w>=600 or abs(wdl.wins-wdl.losses)<300 else ("⚪" if wdl.wins>wdl.losses else "⚫")
             print(f"D: {d} | {em}")
             if r and (wdl.losses if b.turn==c.WHITE else wdl.wins) >= r: g.headers["Result"] = "0-1" if b.turn==c.WHITE else "1-0"; break
             n = n.add_variation(m); b.push(m)
-        g.headers.update({"Event":"Match","White":W.id.get("name","W"),"Black":B.id.get("name","B"),"Result":g.headers.get("Result", b.result()),"FEN":f,"SetUp":"1"})
+        g.headers.update({"Event":"Match","White":W.id.get("name","W"),"Black":B.id.get("name","B"),"Result": g.headers["Result"] if g.headers["Result"] != "*" else b.result(claim_draw=True),"FEN":f,"SetUp":"1"})
         open(pn,"w").write(str(g))
