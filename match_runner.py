@@ -6,7 +6,7 @@ def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None):
         if not x.endswith(".") and not (len(x)>1 and x[:-1].isdigit()): n = n.add_variation(b.push_san(x))
     with e.SimpleEngine.popen_uci(we) as W, e.SimpleEngine.popen_uci(be) as B:
         W.configure({"Hash":wh,"Threads":wt}); B.configure({"Hash":bh,"Threads":bt})
-        E,T,w = (W, B), (Wd, Bd), 0
+        E,T,w = (B, W), (Bd, Wd), 0
         while not b.is_game_over() and (res:=E[b.turn].analyse(b,e.Limit(depth=(d:=next((x for k,x in T[b.turn] if abs(w)>=k),10))))).get("pv"):
             wdl,m = res["score"].white().wdl(), res["pv"][0]; w = wdl.draws
             em = "🤝" if w>=600 or abs(wdl.wins-wdl.losses)<300 else ("⚪" if wdl.wins>wdl.losses else "⚫")
