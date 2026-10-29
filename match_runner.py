@@ -10,7 +10,7 @@ def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None):
         while not b.is_game_over(claim_draw=True) and (res:=E[b.turn].analyse(b,e.Limit(depth=(d:=next((x for k,x in T[b.turn] if abs(w)>=k),10))))).get("pv"):
             wdl,m = res["score"].white().wdl(), res["pv"][0]; w = wdl.draws
             em = "🤝" if w>=600 or abs(wdl.wins-wdl.losses)<300 else ("⚪" if wdl.wins>wdl.losses else "⚫")
-            print(f"D: {d} | {'+' if wdl.wins >= wdl.losses else '-'}{f'{max(wdl.wins, wdl.losses)/1000:.2f}'.rstrip('0').rstrip('.')} | {em}")
+            print(f"D: {d} | {em}")
             if r and (wdl.losses if b.turn==c.WHITE else wdl.wins) >= r: g.headers["Result"] = "0-1" if b.turn==c.WHITE else "1-0"; break
             n = n.add_variation(m); b.push(m)
         g.headers.update({"Event":"Match","White":W.id.get("name","W"),"Black":B.id.get("name","B"),"Result": g.headers["Result"] if g.headers["Result"] != "*" else b.result(claim_draw=True),"FEN":f,"SetUp":"1"})
