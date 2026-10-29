@@ -7,12 +7,12 @@ PGN_NAME = "match.pgn"
 RESING = 900
 
 WHITE_ENGINE = "/content/stockfish/stockfish-linux-x86-64-universal"
-WHITE_DEPTHS = [(1000, 16), (900, 18), (600, 20), (0, 22)]
+WHITE_DEPTHS = [(900, 18), (700, 20), (0, 22)]
 WHITE_HASH = 2000
 WHITE_THREADS = 1
 
 BLACK_ENGINE = "/content/stockfish/stockfish-linux-x86-64-universal"
-BLACK_DEPTHS = [(1000, 16), (900, 18), (600, 20), (0, 22)]
+BLACK_DEPTHS = [(900, 18), (700, 20), (0, 22)]
 BLACK_HASH = 2000
 BLACK_THREADS = 1
 # ----------------------
