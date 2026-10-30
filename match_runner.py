@@ -1,4 +1,4 @@
-import chess as c, chess.engine as e, chess.pgn
+import math, chess as c, chess.engine as e, chess.pgn
 def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None,ch=False):
     Wd,Bd,b,g = sorted(wd,reverse=True),sorted(bd,reverse=True),c.Board(f, chess960=ch),c.pgn.Game()
     g.setup(b); n = g
