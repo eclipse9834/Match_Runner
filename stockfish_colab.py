@@ -4,6 +4,7 @@ import match_runner
 START_FEN = ""
 OPENING_MOVES = ""
 PGN_NAME = "match.pgn"
+
 RESING = False
 CHESS960 = False
 ENTROPY = False
