@@ -12,7 +12,7 @@ def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None,ch=False):
             score = f"{'+' if wdl.wins >= wdl.losses else '-'}{max(wdl.wins, wdl.losses) / 1000.0:.2f}".rstrip('0').rstrip('.')
             em = "🤝" if w>=600 or abs(wdl.wins-wdl.losses)<300 else ("⚪" if wdl.wins>wdl.losses else "⚫")
             H = -sum(p/1000 * math.log2(p/1000) for p in (wdl.wins, wdl.draws, wdl.losses) if p > 0)
-            print(f"D: {em} | {score} | {H:.2f} | {d}")
+            print(f"{em} | {score} | {H:.2f} | {d}")
             if r and (wdl.losses if b.turn==c.WHITE else wdl.wins) >= r: g.headers["Result"] = "0-1" if b.turn==c.WHITE else "1-0"; break
             n = n.add_variation(m); b.push(m)
         g.headers.update({"Event":"Match","White":W.id.get("name","W"),"Black":B.id.get("name","B"),"Result": g.headers["Result"] if g.headers["Result"] != "*" else b.result(claim_draw=True),"FEN":f,"SetUp":"1"})
