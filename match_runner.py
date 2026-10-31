@@ -1,6 +1,6 @@
 import math, chess as c, chess.engine as e, chess.pgn
 def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None,ch=False):
-    Wd,Bd,b,g = sorted(wd,reverse=True),sorted(bd,reverse=True),c.Board(f, chess960=ch),c.pgn.Game()
+    Wd,Bd,b,g = sorted(wd,reverse=True),sorted(bd,reverse=True),c.Board(f if f else None, chess960=ch),c.pgn.Game()
     g.setup(b); n = g
     for x in o.split():
         if not x.endswith(".") and not (len(x)>1 and x[:-1].isdigit()): n = n.add_variation(b.push_san(x))
