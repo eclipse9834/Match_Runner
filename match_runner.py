@@ -1,5 +1,5 @@
 import math, chess as c, chess.engine as e, chess.pgn
-def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None,ch=False,entropia=False):
+def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None,ch=False,entropia=False, tm=None):
     Wd,Bd,b,g = sorted(wd,reverse=True),sorted(bd,reverse=True),(c.Board(f, chess960=ch) if f else c.Board(chess960=ch)),c.pgn.Game(); i=b.fen()
     g.setup(b); n = g
     for x in o.split():
