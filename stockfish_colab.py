@@ -1,7 +1,7 @@
 import match_runner
 
 # ----------------------
-START_FEN = ""
+FEN = ""
 OPENING_MOVES = ""
 PGN_NAME = "match.pgn"
 
