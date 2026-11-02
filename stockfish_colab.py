@@ -1,22 +1,23 @@
 import match_runner
 
 # ----------------------
-FEN = ""
+FEN_INI = ""
 ABERTURA = ""
 ARQ_PGN = "match.pgn"
 
-CHESS960 = False
 ABANDONAR = False
-ENTROPIA = False
+CHESS960 = False
+ENTROPIA = True
+TEMPO = None
 
 ENG_BRANCAS = "/content/stockfish/stockfish-linux-x86-64-universal"
-WHITE_DEPTHS = [(900, 18), (700, 20), (0, 22)]
-WHITE_HASH = 512
-WHITE_THREADS = 1
+PROF_BRANCAS = [(900, 18), (700, 20), (0, 22)]
+HASH_BRANCAS = 512
+TH_BRANCAS = 1
 
 ENG_PRETAS = "/content/stockfish/stockfish-linux-x86-64-universal"
-BLACK_DEPTHS = [(900, 18), (700, 20), (0, 22)]
-BLACK_HASH = 512
-BLACK_THREADS = 1
+PROF_PRETAS = [(900, 18), (700, 20), (0, 22)]
+HASH_PRETAS = 512
+TH_PRETAS = 1
 # ----------------------
-match_runner.run_match(FEN, ABERTURA, ENG_BRANCAS, WHITE_HASH, WHITE_THREADS, WHITE_DEPTHS, ENG_PRETAS, BLACK_HASH, BLACK_THREADS, BLACK_DEPTHS, ARQ_PGN, ABANDONAR, CHESS960, ENTROPIA)
+match_runner.run_match(FEN_INI, ABERTURA, ENG_BRANCAS, HASH_BRANCAS, TH_BRANCAS, PROF_BRANCAS, ENG_PRETAS, HASH_PRETAS, TH_PRETAS, PROF_PRETAS, ARQ_PGN, ABANDONA, CHESS960, ENTROPIA)
