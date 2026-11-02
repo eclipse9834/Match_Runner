@@ -1,4 +1,4 @@
-import math, chess as c, chess.engine as e, chess.pgn
+import math, time, chess as c, chess.engine as e, chess.pgn
 def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None,ch=False,entropia=False, tm=None):
     Wd,Bd,b,g = sorted(wd,reverse=True),sorted(bd,reverse=True),(c.Board(f, chess960=ch) if f else c.Board(chess960=ch)),c.pgn.Game(); i=b.fen()
     g.setup(b); n = g
@@ -12,5 +12,5 @@ def run_match(f,o,we,wh,wt,wd,be,bh,bt,bd,pn,r=None,ch=False,entropia=False, tm=
             print(f"D:{res.get('depth')} | {f'{H:.2f}' if entropia else score} {em}")
             if r and (wdl.losses if b.turn==c.WHITE else wdl.wins) >= r: g.headers["Result"] = "0-1" if b.turn==c.WHITE else "1-0"; break
             n = n.add_variation(m); b.push(m)
-        g.headers.update({"Event":"Match","White":W.id.get("name","W"),"Black":B.id.get("name","B"),"Result": g.headers["Result"] if g.headers["Result"] != "*" else b.result(claim_draw=True),"FEN":f if f else i,"SetUp":"1"})
+        g.headers.update({"Event":"Match","Date":time.strftime("%Y.%m.%d"),"White":W.id.get("name","W"),"Black":B.id.get("name","B"),"Result": g.headers["Result"] if g.headers["Result"] != "*" else b.result(claim_draw=True),"FEN":f if f else i,"SetUp":"1"})
         open(pn,"w").write(str(g)); print(f"{g.headers['Result']}")
